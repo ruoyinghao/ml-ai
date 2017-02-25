@@ -1,0 +1,1 @@
+1. first obtain list of all companies and tickers NYSE.txt

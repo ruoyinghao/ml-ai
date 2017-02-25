@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 from urllib.request import urlopen
 import urllib
 from urllib.error import HTTPError
@@ -38,13 +37,17 @@ while ticker!="":
 
         #get the link to excel file
         subsoup=BeautifulSoup(excel_page.read())
-        for link in subsoup.find_all(href=re.compile("Financial_Report.xlsx")):
+        for link in subsoup.find_all(href=re.compile("Financial_Report")):
             file_link= link.get('href');
-            re_name=ticker+"_"+file_date[i]+"_"+"10Q"+".xlsx";
+            if file_link[:-1]=='x':
+                re_name=ticker+"_"+file_date[i]+"_"+"10Q"+".xlsx";
+            else:
+                re_name=ticker+"_"+file_date[i]+"_"+"10Q"+".xls";
             urllib.request.urlretrieve("https://www.sec.gov"+file_link,re_name)
             print(re_name+" download complete");
     print(ticker+" download complete");
     ticker=fr.readline();
+    ticker=ticker[0:len(ticker)-1];
 
 fr.close();
 print("SP100 download complete");
